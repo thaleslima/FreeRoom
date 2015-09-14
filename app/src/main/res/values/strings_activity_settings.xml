@@ -1,0 +1,10 @@
+<resources>
+
+    <string name="pref_title_url_service">URL Free Room</string>
+    <string name="pref_header_settings">Settings</string>
+    <string name="key_url_service">key_url_service</string>
+    <string name="pref_default_url_service">http://ciandt-i.dev.smartcanvas.com/free+room</string>
+
+    <string name="key_rooms">key_rooms</string>
+    <string name="pref_default_rooms">[{name=23A, parameter=23A}, {name=23B, parameter=23B}, {name=16, parameter=16}, {name=12, parameter=12}, {name=9, parameter=9}]</string>
+</resources>
