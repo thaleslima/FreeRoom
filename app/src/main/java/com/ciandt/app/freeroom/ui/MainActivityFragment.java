@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
@@ -19,7 +20,7 @@ import com.ciandt.app.freeroom.util.ReloadWebView;
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends Fragment{
-    private static final String LOG = MainActivityFragment.class.getSimpleName();
+    private static final String LOG = "Log";
 
     private WebView mWebView;
     private ProgressBar mProgressBar;
@@ -28,6 +29,7 @@ public class MainActivityFragment extends Fragment{
 
     private static final String ARG_URL = "url";
     private static final String ARG_REFRESH = "refresh";
+    private ReloadWebView mReloadWebView;
 
     public static MainActivityFragment newInstance(String url, int refresh) {
         MainActivityFragment fragment = new MainActivityFragment();
@@ -51,15 +53,10 @@ public class MainActivityFragment extends Fragment{
         return view;
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        new ReloadWebView(this.getActivity(), mWebView);
-    }
-
     private void initWebView(View view) {
         mWebView = (WebView) view.findViewById(R.id.webview);
+        mReloadWebView = new ReloadWebView(this.getActivity(), mWebView, mRefresh);
+
         mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setBuiltInZoomControls(false);
@@ -88,11 +85,10 @@ public class MainActivityFragment extends Fragment{
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-
                 mProgressBar.setVisibility(View.INVISIBLE);
+                mReloadWebView.start();
             }
         });
-
         mWebView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -101,7 +97,7 @@ public class MainActivityFragment extends Fragment{
         });
         mWebView.setLongClickable(false);
         mWebView.loadUrl(mUrl);
-
+        
         Log.d(LOG, mUrl);
     }
 
