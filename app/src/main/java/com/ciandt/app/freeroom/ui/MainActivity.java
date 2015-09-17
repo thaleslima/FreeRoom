@@ -55,10 +55,20 @@ public class MainActivity extends Activity implements RoomAdapter.OnItemClickLis
             @Override
             public boolean onLongClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
                 return false;
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == 1  && resultCode == RESULT_OK){
+            if(alarm != null) alarm.cancelAlarm(this);
+            finish();
+        }
     }
 
     private void initFirebase() {

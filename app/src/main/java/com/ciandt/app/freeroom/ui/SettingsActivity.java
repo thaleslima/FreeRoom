@@ -46,42 +46,4 @@ public class SettingsActivity extends PreferenceActivity {
             }
         });
     }
-
-    private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object value) {
-
-            Firebase myFirebaseRef = new Firebase(Constants.URL_FIREBASE);
-            String stringValue = value.toString();
-            preference.setSummary(stringValue);
-
-            if(preference.getKey().equals("key_url_service")) {
-                myFirebaseRef.child(Constants.URL_FREE_ROOM).setValue(stringValue);
-            }else {
-                myFirebaseRef.child(Constants.URL_TIME_RELOAD).setValue(stringValue);
-            }
-
-            return true;
-        }
-    };
-
-    private static void bindPreferenceSummaryToValue(Preference preference) {
-        preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
-        sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
-                PreferenceManager
-                        .getDefaultSharedPreferences(preference.getContext())
-                        .getString(preference.getKey(), ""));
-    }
-
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class GeneralPreferenceFragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_general);
-
-            bindPreferenceSummaryToValue(findPreference(getString(R.string.key_url_service)));
-            bindPreferenceSummaryToValue(findPreference(getString(R.string.key_time_reload)));
-        }
-    }
 }

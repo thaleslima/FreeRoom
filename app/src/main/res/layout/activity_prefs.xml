@@ -16,7 +16,7 @@
         android:elevation="4dp">
         </android.support.v7.widget.Toolbar>
 
-    <fragment android:name="com.ciandt.app.freeroom.ui.SettingsActivity$GeneralPreferenceFragment"
+    <fragment android:name="com.ciandt.app.freeroom.ui.SettingsFragment"
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
