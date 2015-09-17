@@ -3,12 +3,12 @@ package com.ciandt.app.freeroom.model;
 /**
  * Created by Garage on 10/09/15.
  */
-public class Room {
+public class Building {
     private String name;
     private String parameter;
     private boolean selected;
 
-    public Room(String name, String parameter) {
+    public Building(String name, String parameter) {
         this.name = name;
         this.parameter = parameter;
     }

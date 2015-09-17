@@ -1,6 +1,5 @@
 package com.ciandt.app.freeroom.adapter;
 
-import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ciandt.app.freeroom.R;
-import com.ciandt.app.freeroom.model.Room;
+import com.ciandt.app.freeroom.model.Building;
 
 import java.util.List;
 
@@ -17,9 +16,9 @@ import java.util.List;
  */
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
     private OnItemClickListener mListener;
-    private List<Room> mDataSet;
+    private List<Building> mDataSet;
 
-    public RoomAdapter(List<Room> mDataSet) {
+    public RoomAdapter(List<Building> mDataSet) {
         this.mDataSet = mDataSet;
     }
 
@@ -59,7 +58,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
             }
         }
 
-        public void populate(Room data) {
+        public void populate(Building data) {
             if(data.isSelected()) {
                 nameView.setBackgroundResource(R.drawable.frame_accent);
             }
@@ -72,16 +71,18 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
     }
 
     public interface OnItemClickListener {
-        void onItemClick(View view, int index, Room room);
+        void onItemClick(View view, int index, Building building);
     }
 
     public void setItemSelected(int index)
     {
-        for (Room room: mDataSet){
-            room.setSelected(false);
-        }
+        if(mDataSet.size() > 0) {
+            for (Building building : mDataSet) {
+                building.setSelected(false);
+            }
 
-        mDataSet.get(index).setSelected(true);
+            mDataSet.get(index).setSelected(true);
+        }
         notifyDataSetChanged();
     }
 }

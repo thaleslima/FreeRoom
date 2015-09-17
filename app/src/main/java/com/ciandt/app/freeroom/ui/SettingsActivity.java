@@ -50,11 +50,16 @@ public class SettingsActivity extends PreferenceActivity {
     private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object value) {
+
+            Firebase myFirebaseRef = new Firebase(Constants.URL_FIREBASE);
             String stringValue = value.toString();
             preference.setSummary(stringValue);
 
-            Firebase myFirebaseRef = new Firebase(Constants.URL_FIREBASE);
-            myFirebaseRef.child(Constants.URL_FREE_ROOM).setValue(stringValue);
+            if(preference.getKey().equals("key_url_service")) {
+                myFirebaseRef.child(Constants.URL_FREE_ROOM).setValue(stringValue);
+            }else {
+                myFirebaseRef.child(Constants.URL_TIME_RELOAD).setValue(stringValue);
+            }
 
             return true;
         }
@@ -76,6 +81,7 @@ public class SettingsActivity extends PreferenceActivity {
             addPreferencesFromResource(R.xml.pref_general);
 
             bindPreferenceSummaryToValue(findPreference(getString(R.string.key_url_service)));
+            bindPreferenceSummaryToValue(findPreference(getString(R.string.key_time_reload)));
         }
     }
 }

@@ -10,4 +10,13 @@
         android:singleLine="true"
         android:maxLines="1" />
 
+    <EditTextPreference
+        android:key="key_time_reload"
+        android:title="@string/pref_title_time_reload"
+        android:defaultValue="@string/pref_default_time_reload"
+        android:selectAllOnFocus="true"
+        android:inputType="number"
+        android:singleLine="true"
+        android:maxLines="1"/>
+
 </PreferenceScreen>
