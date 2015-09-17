@@ -1,17 +1,17 @@
 <resources>
 
+    <string name="pref_header_settings">Settings</string>
     <string name="pref_title_url_service">URL Free Room</string>
     <string name="pref_title_time_reload">Time Reload (seconds)</string>
+    <string name="pref_title_buildings">Buildings</string>
     <string name="pref_title_close_app">Sair</string>
 
-    <string name="pref_header_settings">Settings</string>
     <string name="key_url_service">key_url_service</string>
     <string name="key_time_reload">key_time_reload</string>
+    <string name="key_buildings">key_buildings</string>
     <string name="key_close_app">key_close_app</string>
 
     <string name="pref_default_url_service">http://ciandt-i.dev.smartcanvas.com/free+room</string>
     <string name="pref_default_time_reload">10</string>
-
-    <string name="key_buildings">key_buildings</string>
-    <string name="pref_default_rooms">[{name=23A, parameter=23A}, {name=23B, parameter=23B}, {name=16, parameter=16}, {name=12, parameter=12}, {name=9, parameter=9}]</string>
+    <string name="pref_default_buildings">[{name=23A, parameter=23A}, {name=23B, parameter=23B}, {name=16, parameter=16}, {name=12, parameter=12}, {name=9, parameter=9}]</string>
 </resources>

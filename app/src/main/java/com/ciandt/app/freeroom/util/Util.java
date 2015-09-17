@@ -47,7 +47,7 @@ public class Util {
 
     public static String getBuildings(Context context) {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPrefs.getString(context.getString(R.string.key_buildings), context.getString(R.string.pref_default_rooms));
+        return sharedPrefs.getString(context.getString(R.string.key_buildings), context.getString(R.string.pref_default_buildings));
     }
 
     public static long getTimeReload(Context context) {

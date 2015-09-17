@@ -11,6 +11,15 @@
         android:maxLines="1" />
 
     <EditTextPreference
+        android:key="key_buildings"
+        android:title="@string/pref_title_buildings"
+        android:defaultValue="@string/pref_default_buildings"
+        android:selectAllOnFocus="true"
+        android:inputType="textCapWords"
+        android:singleLine="false"
+        android:maxLines="5"/>
+
+    <EditTextPreference
         android:key="key_time_reload"
         android:title="@string/pref_title_time_reload"
         android:defaultValue="@string/pref_default_time_reload"

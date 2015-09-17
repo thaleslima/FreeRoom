@@ -21,6 +21,7 @@ public class SettingsFragment extends PreferenceFragment {
 
         bindPreferenceSummaryToValue(findPreference(getString(R.string.key_url_service)));
         bindPreferenceSummaryToValue(findPreference(getString(R.string.key_time_reload)));
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.key_buildings)));
         bindPreferenceClickListener(findPreference(getString(R.string.key_close_app)));
     }
 
@@ -57,6 +58,8 @@ public class SettingsFragment extends PreferenceFragment {
                 myFirebaseRef.child(Constants.URL_FREE_ROOM).setValue(stringValue);
             } else if (preference.getKey().equals("key_time_reload")) {
                 myFirebaseRef.child(Constants.URL_TIME_RELOAD).setValue(stringValue);
+            } else if (preference.getKey().equals("key_buildings")) {
+                myFirebaseRef.child(Constants.URL_BUILDING).setValue(stringValue);
             }
 
             return true;
