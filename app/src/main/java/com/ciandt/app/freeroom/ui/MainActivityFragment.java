@@ -1,7 +1,9 @@
 package com.ciandt.app.freeroom.ui;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -55,26 +57,33 @@ public class MainActivityFragment extends Fragment{
 
     private void initWebView(View view) {
         mWebView = (WebView) view.findViewById(R.id.webview);
-        mReloadWebView = new ReloadWebView(this.getActivity(), mWebView, mRefresh);
 
         mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setBuiltInZoomControls(false);
         mWebView.getSettings().setDomStorageEnabled(true);
+        mWebView.getSettings().setAllowFileAccess(true);
+        mWebView.getSettings().setLoadsImagesAutomatically(true);
+        mWebView.getSettings().setLoadWithOverviewMode(true);
         mWebView.getSettings().setAllowContentAccess(true);
         mWebView.getSettings().setAppCacheEnabled(true);
+        mWebView.getSettings().setAllowUniversalAccessFromFileURLs(true);
         mWebView.getSettings().setDatabaseEnabled(true);
-        mWebView.getSettings().setGeolocationEnabled(true);
+        //mWebView.getSettings().setGeolocationEnabled(true);
 
         mWebView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-        mWebView.setVerticalScrollBarEnabled(false);
-        mWebView.setHorizontalScrollBarEnabled(false);
-        mWebView.setWebChromeClient(new WebChromeClient());
+        //mWebView.setVerticalScrollBarEnabled(false);
+        //mWebView.setHorizontalScrollBarEnabled(false);
+        //mWebView.setWebChromeClient(new WebChromeClient());
         mWebView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                return false;
+
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                getActivity().startActivity(intent);
+
+                return true;
             }
 
             @Override
@@ -86,7 +95,13 @@ public class MainActivityFragment extends Fragment{
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 mProgressBar.setVisibility(View.INVISIBLE);
-                mReloadWebView.start();
+
+//                if (mReloadWebView != null) {
+//                    mReloadWebView.cancel();
+//                }
+//
+//                mReloadWebView = new ReloadWebView(MainActivityFragment.this.getActivity(), mWebView, mRefresh);
+//                mReloadWebView.start();
             }
         });
         mWebView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -97,7 +112,7 @@ public class MainActivityFragment extends Fragment{
         });
         mWebView.setLongClickable(false);
         mWebView.loadUrl(mUrl);
-        
+
         Log.d(LOG, mUrl);
     }
 

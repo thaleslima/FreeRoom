@@ -53,5 +53,11 @@ public class ReloadWebView extends TimerTask {
                 mTimeReload * 1000,  // initial delay
                 mTimeReload * 1000); // subsequent rate
     }
+
+    @Override
+    public boolean cancel() {
+        if(timer != null) timer.cancel();
+        return super.cancel();
+    }
 }
 

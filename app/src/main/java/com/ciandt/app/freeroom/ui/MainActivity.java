@@ -174,6 +174,7 @@ public class MainActivity extends Activity implements RoomAdapter.OnItemClickLis
         if(isResumed) {
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             String parameter = mDataSet.get(mCurrentIndex).getParameter();
+            long refresh = Util.getTimeReload(MainActivity.this);
             String url =  Util.getUrl(MainActivity.this) + "+" + parameter;
             ft.replace(R.id.fragment, MainActivityFragment.newInstance(url, 10000));
             ft.commit();
