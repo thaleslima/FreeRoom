@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.CookieManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -27,17 +28,19 @@ public class MainActivityFragment extends Fragment{
     private WebView mWebView;
     private ProgressBar mProgressBar;
     private String mUrl;
-    private int mRefresh;
+    private long mRefresh;
 
     private static final String ARG_URL = "url";
     private static final String ARG_REFRESH = "refresh";
     private ReloadWebView mReloadWebView;
 
-    public static MainActivityFragment newInstance(String url, int refresh) {
+    public static MainActivityFragment newInstance(String url, long refresh) {
+        Log.d(LOG, "MainActivityFragment.newInstance");
+
         MainActivityFragment fragment = new MainActivityFragment();
         Bundle args = new Bundle();
         args.putString(ARG_URL, url);
-        args.putInt(ARG_REFRESH, refresh);
+        args.putLong(ARG_REFRESH, refresh);
         fragment.setArguments(args);
 
         return fragment;
@@ -49,7 +52,7 @@ public class MainActivityFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
         mUrl = getArguments().getString(ARG_URL);
-        mRefresh = getArguments().getInt(ARG_REFRESH);
+        mRefresh = getArguments().getLong(ARG_REFRESH);
 
         initWebView(view);
         return view;
@@ -57,33 +60,20 @@ public class MainActivityFragment extends Fragment{
 
     private void initWebView(View view) {
         mWebView = (WebView) view.findViewById(R.id.webview);
-
         mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
-        mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.getSettings().setBuiltInZoomControls(false);
-        mWebView.getSettings().setDomStorageEnabled(true);
-        mWebView.getSettings().setAllowFileAccess(true);
-        mWebView.getSettings().setLoadsImagesAutomatically(true);
-        mWebView.getSettings().setLoadWithOverviewMode(true);
-        mWebView.getSettings().setAllowContentAccess(true);
-        mWebView.getSettings().setAppCacheEnabled(true);
-        mWebView.getSettings().setAllowUniversalAccessFromFileURLs(true);
-        mWebView.getSettings().setDatabaseEnabled(true);
-        //mWebView.getSettings().setGeolocationEnabled(true);
 
-        mWebView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-        //mWebView.setVerticalScrollBarEnabled(false);
-        //mWebView.setHorizontalScrollBarEnabled(false);
-        //mWebView.setWebChromeClient(new WebChromeClient());
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.setAcceptThirdPartyCookies(mWebView, true);
+
+        mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.getSettings().setDomStorageEnabled(true);
         mWebView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+
+        mWebView.setWebChromeClient(new WebChromeClient());
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                getActivity().startActivity(intent);
-
-                return true;
+                return false;
             }
 
             @Override
@@ -96,12 +86,12 @@ public class MainActivityFragment extends Fragment{
                 super.onPageFinished(view, url);
                 mProgressBar.setVisibility(View.INVISIBLE);
 
-//                if (mReloadWebView != null) {
-//                    mReloadWebView.cancel();
-//                }
-//
-//                mReloadWebView = new ReloadWebView(MainActivityFragment.this.getActivity(), mWebView, mRefresh);
-//                mReloadWebView.start();
+                if (mReloadWebView != null) {
+                    mReloadWebView.cancel();
+                }
+
+                mReloadWebView = new ReloadWebView(MainActivityFragment.this.getActivity(), mWebView, mRefresh);
+                mReloadWebView.start();
             }
         });
         mWebView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -114,10 +104,5 @@ public class MainActivityFragment extends Fragment{
         mWebView.loadUrl(mUrl);
 
         Log.d(LOG, mUrl);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 }

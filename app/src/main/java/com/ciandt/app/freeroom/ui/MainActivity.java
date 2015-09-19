@@ -25,7 +25,6 @@ import com.firebase.client.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-//"http://ciandt-i.dev.smartcanvas.com/free+room"
 public class MainActivity extends Activity implements RoomAdapter.OnItemClickListener, ValueEventListener {
     AlarmReceiver alarm = new AlarmReceiver();
     private RecyclerView mRecyclerView;
@@ -46,6 +45,9 @@ public class MainActivity extends Activity implements RoomAdapter.OnItemClickLis
         initFirebase();
         initRecyclerView();
         initButton();
+
+        isResumed = true;
+        loadBuildings();
     }
 
     private void initButton() {
@@ -129,7 +131,6 @@ public class MainActivity extends Activity implements RoomAdapter.OnItemClickLis
     protected void onResume() {
         super.onResume();
         isResumed = true;
-        loadBuildings();
     }
 
     @Override
@@ -176,7 +177,7 @@ public class MainActivity extends Activity implements RoomAdapter.OnItemClickLis
             String parameter = mDataSet.get(mCurrentIndex).getParameter();
             long refresh = Util.getTimeReload(MainActivity.this);
             String url =  Util.getUrl(MainActivity.this) + "+" + parameter;
-            ft.replace(R.id.fragment, MainActivityFragment.newInstance(url, 10000));
+            ft.replace(R.id.fragment, MainActivityFragment.newInstance(url, refresh));
             ft.commit();
         }
     }
