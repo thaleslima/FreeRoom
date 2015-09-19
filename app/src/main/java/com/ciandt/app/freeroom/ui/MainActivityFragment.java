@@ -105,4 +105,13 @@ public class MainActivityFragment extends Fragment{
 
         Log.d(LOG, mUrl);
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        if (mReloadWebView != null) {
+            mReloadWebView.cancel();
+        }
+    }
 }

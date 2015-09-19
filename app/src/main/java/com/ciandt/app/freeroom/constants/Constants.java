@@ -10,4 +10,8 @@ public class Constants {
     public final static String URL_TIME_RELOAD = "time_reload";
 
     public final static int TIME_RELOAD = 10000; //seconds
+
+    public interface Admin {
+        String PASSWORD = "G@RAGE";
+    }
 }

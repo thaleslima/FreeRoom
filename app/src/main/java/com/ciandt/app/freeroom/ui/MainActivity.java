@@ -25,7 +25,7 @@ import com.firebase.client.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends Activity implements RoomAdapter.OnItemClickListener, ValueEventListener {
+public class MainActivity extends Activity implements RoomAdapter.OnItemClickListener, ValueEventListener, ConfirmDialog.ConfirmDialogListener {
     AlarmReceiver alarm = new AlarmReceiver();
     private RecyclerView mRecyclerView;
     private RoomAdapter mAdapter;
@@ -47,7 +47,6 @@ public class MainActivity extends Activity implements RoomAdapter.OnItemClickLis
         initButton();
 
         isResumed = true;
-        loadBuildings();
     }
 
     private void initButton() {
@@ -56,8 +55,9 @@ public class MainActivity extends Activity implements RoomAdapter.OnItemClickLis
         mButtonSettings.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-                startActivityForResult(intent, 1);
+                ConfirmDialog newFragment = ConfirmDialog.newInstance();
+                newFragment.show(getFragmentManager(), "dialog", MainActivity.this);
+
                 return false;
             }
         });
@@ -131,6 +131,7 @@ public class MainActivity extends Activity implements RoomAdapter.OnItemClickLis
     protected void onResume() {
         super.onResume();
         isResumed = true;
+        loadBuildings();
     }
 
     @Override
@@ -206,5 +207,11 @@ public class MainActivity extends Activity implements RoomAdapter.OnItemClickLis
     @Override
     public void onCancelled(FirebaseError firebaseError) {
         Log.d("Log", "onCancelled");
+    }
+
+    @Override
+    public void onDialogOkClick() {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivityForResult(intent, 1);
     }
 }

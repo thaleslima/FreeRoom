@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 <item>
-    <ripple android:color="@color/accent">
+    <ripple android:color="@color/selected">
         <item>
             <shape>
                 <solid android:color="@color/window_background" />
