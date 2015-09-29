@@ -23,6 +23,7 @@ public class SettingsFragment extends PreferenceFragment {
         bindPreferenceSummaryToValue(findPreference(getString(R.string.key_time_reload)));
         bindPreferenceSummaryToValue(findPreference(getString(R.string.key_buildings)));
         bindPreferenceClickListener(findPreference(getString(R.string.key_close_app)));
+        bindPreferenceClickListener(findPreference(getString(R.string.key_clean_cache)));
     }
 
     private void bindPreferenceSummaryToValue(Preference preference) {
@@ -38,7 +39,10 @@ public class SettingsFragment extends PreferenceFragment {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 if (preference.getKey().equals("key_close_app")) {
-                    getActivity().setResult(Activity.RESULT_OK);
+                    getActivity().setResult(Constants.RESULT_CLOSE_APP);
+                    getActivity().finish();
+                } else if (preference.getKey().equals("key_clean_cache")) {
+                    getActivity().setResult(Constants.RESULT_CLEAN_CACHE);
                     getActivity().finish();
                 }
 

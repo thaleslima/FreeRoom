@@ -28,6 +28,7 @@ public class SchedulingService extends IntentService {
         if(appInBackground){
             Intent it = new Intent(this, MainActivity.class);
             it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             it.addFlags(Intent.FLAG_FROM_BACKGROUND);
             this.startActivity(it);
         }

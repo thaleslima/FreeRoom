@@ -8,10 +8,11 @@ public class Constants {
     public final static String URL_FREE_ROOM = "url_free_room";
     public final static String URL_BUILDING = "buildings";
     public final static String URL_TIME_RELOAD = "time_reload";
-
+    public final static int RESULT_CLOSE_APP = 1;
+    public final static int RESULT_CLEAN_CACHE = 2;
     public final static int TIME_RELOAD = 10000; //seconds
 
     public interface Admin {
-        String PASSWORD = "G@RAGE";
+        String PASSWORD = "135975";
     }
 }

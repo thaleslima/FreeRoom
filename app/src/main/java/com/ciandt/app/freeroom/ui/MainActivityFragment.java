@@ -29,18 +29,21 @@ public class MainActivityFragment extends Fragment{
     private ProgressBar mProgressBar;
     private String mUrl;
     private long mRefresh;
+    private boolean mCleanCache;
 
     private static final String ARG_URL = "url";
     private static final String ARG_REFRESH = "refresh";
+    private static final String ARG_CLEAN_CACHE = "clean_cache";
     private ReloadWebView mReloadWebView;
 
-    public static MainActivityFragment newInstance(String url, long refresh) {
+    public static MainActivityFragment newInstance(String url, long refresh, boolean cleanCache) {
         Log.d(LOG, "MainActivityFragment.newInstance");
 
         MainActivityFragment fragment = new MainActivityFragment();
         Bundle args = new Bundle();
         args.putString(ARG_URL, url);
         args.putLong(ARG_REFRESH, refresh);
+        args.putBoolean(ARG_CLEAN_CACHE, cleanCache);
         fragment.setArguments(args);
 
         return fragment;
@@ -53,7 +56,7 @@ public class MainActivityFragment extends Fragment{
 
         mUrl = getArguments().getString(ARG_URL);
         mRefresh = getArguments().getLong(ARG_REFRESH);
-
+        mCleanCache = getArguments().getBoolean(ARG_CLEAN_CACHE);
         initWebView(view);
         return view;
     }
@@ -67,7 +70,7 @@ public class MainActivityFragment extends Fragment{
 
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setDomStorageEnabled(true);
-        mWebView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        //mWebView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
         mWebView.setWebChromeClient(new WebChromeClient());
         mWebView.setWebViewClient(new WebViewClient() {
@@ -101,6 +104,14 @@ public class MainActivityFragment extends Fragment{
             }
         });
         mWebView.setLongClickable(false);
+
+        if(mCleanCache){
+            mWebView.clearCache(true);
+            mWebView.clearHistory();
+            cookieManager.removeAllCookies(null);
+            cookieManager.flush();
+        }
+
         mWebView.loadUrl(mUrl);
 
         Log.d(LOG, mUrl);

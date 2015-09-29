@@ -34,6 +34,7 @@ public class MainActivity extends Activity implements RoomAdapter.OnItemClickLis
     private int mCurrentIndex;
     private List<Building> mDataSet;
     private boolean isResumed = false;
+    private boolean mCleanCache = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +68,11 @@ public class MainActivity extends Activity implements RoomAdapter.OnItemClickLis
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == 1  && resultCode == RESULT_OK){
+        if(requestCode == 1  && resultCode == Constants.RESULT_CLOSE_APP){
             if(alarm != null) alarm.cancelAlarm(this);
             finish();
+        } else if(requestCode == 1  && resultCode == Constants.RESULT_CLEAN_CACHE){
+            mCleanCache = true;
         }
     }
 
@@ -178,8 +181,10 @@ public class MainActivity extends Activity implements RoomAdapter.OnItemClickLis
             String parameter = mDataSet.get(mCurrentIndex).getParameter();
             long refresh = Util.getTimeReload(MainActivity.this);
             String url =  Util.getUrl(MainActivity.this) + "+" + parameter;
-            ft.replace(R.id.fragment, MainActivityFragment.newInstance(url, refresh));
+            ft.replace(R.id.fragment, MainActivityFragment.newInstance(url, refresh, mCleanCache));
             ft.commit();
+
+            mCleanCache = false;
         }
     }
 

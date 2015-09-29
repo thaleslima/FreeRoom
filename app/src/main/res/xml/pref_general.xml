@@ -29,6 +29,11 @@
         android:maxLines="1"/>
 
     <Preference
+        android:key="key_clean_cache"
+        android:title="@string/pref_title_clean_cache" />
+
+
+    <Preference
         android:key="key_close_app"
         android:title="@string/pref_title_close_app" />
 
