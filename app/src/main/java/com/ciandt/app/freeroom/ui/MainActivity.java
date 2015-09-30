@@ -17,11 +17,13 @@ import com.ciandt.app.freeroom.model.Building;
 import com.ciandt.app.freeroom.service.AlarmReceiver;
 import com.ciandt.app.freeroom.util.GridAutofitLayoutManager;
 import com.ciandt.app.freeroom.util.Util;
+import com.crashlytics.android.Crashlytics;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import io.fabric.sdk.android.Fabric;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +41,7 @@ public class MainActivity extends Activity implements RoomAdapter.OnItemClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
         initHideMenuNavigation();
         alarm.setAlarm(this);

@@ -34,5 +34,8 @@
 
         <receiver android:name=".service.AlarmReceiver"/>
         <service android:name=".service.SchedulingService" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="dda9fdf8c9c606240a44bb0664b7fe8b49e65e6b" />
     </application>
 </manifest>
