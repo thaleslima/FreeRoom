@@ -176,7 +176,7 @@ public class MainActivity extends Activity implements RoomAdapter.OnItemClickLis
     }
 
     private void loadPage(){
-        if(isResumed) {
+        if(isResumed && mDataSet.size() > 0) {
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             String parameter = mDataSet.get(mCurrentIndex).getParameter();
             long refresh = Util.getTimeReload(MainActivity.this);

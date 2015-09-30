@@ -93,7 +93,7 @@ public class MainActivityFragment extends Fragment{
                     mReloadWebView.cancel();
                 }
 
-                mReloadWebView = new ReloadWebView(MainActivityFragment.this.getActivity(), mWebView, mRefresh);
+                mReloadWebView = new ReloadWebView(MainActivityFragment.this.getActivity(), mWebView, mRefresh, mUrl);
                 mReloadWebView.start();
             }
         });

@@ -82,7 +82,8 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
             }
 
             mDataSet.get(index).setSelected(true);
+
+            notifyDataSetChanged();
         }
-        notifyDataSetChanged();
     }
 }

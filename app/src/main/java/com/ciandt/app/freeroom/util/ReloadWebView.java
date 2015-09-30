@@ -18,11 +18,17 @@ public class ReloadWebView extends TimerTask {
     private Timer timer;
     private WebView wv;
     private long mTimeReload;
+    private String mUrl;
 
-    public ReloadWebView(Activity context, WebView wv, long timeReload) {
+    public ReloadWebView(Activity context, WebView wv, long timeReload, String url) {
         this.context = context;
         this.wv = wv;
         this.mTimeReload = timeReload;
+        mUrl = url;
+    }
+
+    public void setmUrl(String mUrl) {
+        this.mUrl = mUrl;
     }
 
     @Override
@@ -37,7 +43,7 @@ public class ReloadWebView extends TimerTask {
             @Override
             public void run() {
                 Log.d(LOG, "ReloadWebView.reload");
-                wv.loadUrl(Util.getUrl(context));
+                wv.loadUrl(mUrl);
             }
         });
     }
